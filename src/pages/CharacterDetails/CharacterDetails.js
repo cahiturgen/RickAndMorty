@@ -20,7 +20,6 @@ function CharacterDetails({ match }) {
             getCharacterEpisodes(characterDetail.episode);
     }, [characterDetail])
 
-
     const getCharacterInfo = async () => {
         // Getting character infos.
         EntryQueryService.GetCharacterInfo(match.params.id).then((response) => {
@@ -47,29 +46,32 @@ function CharacterDetails({ match }) {
 
     return (
         <div className="character-details">
-            <Card>
-                <Image src={characterDetail.image} wrapped ui={false} />
-                <Card.Content>
-                    <Card.Header>{characterDetail.name}</Card.Header>
-                    <Card.Meta>
-                        <span>{characterLocation.name} - {characterLocation.type}</span>
-                    </Card.Meta>
-                    <Card.Description>
-                        <List bulleted horizontal>
-                            {characterEpisodeNames.map((episode) => (
-                                <List.Item key={episode}>{episode}</List.Item>
-                            ))}
-                        </List>
-                    </Card.Description>
-                </Card.Content>
-                <Card.Content extra>
-                    <a href={`/`} className="button">
-                        <Button basic color='red'>
-                            Geri Dön
+            {characterEpisodeNames.length == 0 ?
+                <div className="ui active inline loader"></div> :
+                <Card>
+                    <Image src={characterDetail.image} wrapped ui={false} />
+                    <Card.Content>
+                        <Card.Header>{characterDetail.name}</Card.Header>
+                        <Card.Meta>
+                            <span>{characterLocation.name} - {characterLocation.type}</span>
+                        </Card.Meta>
+                        <Card.Description>
+                            <List bulleted horizontal>
+                                {characterEpisodeNames.map((episode) => (
+                                    <List.Item key={episode}>{episode}</List.Item>
+                                ))}
+                            </List>
+                        </Card.Description>
+                    </Card.Content>
+                    <Card.Content extra>
+                        <a href={`/`} className="button">
+                            <Button basic color='red'>
+                                Geri Dön
                         </Button>
-                    </a>
-                </Card.Content>
-            </Card>
+                        </a>
+                    </Card.Content>
+                </Card>
+            }
         </div>
     )
 }
